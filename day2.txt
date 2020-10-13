@@ -1,0 +1,192 @@
+Q.21
+====================
+package ServletDemo;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/Q21_original")
+public class Q21_original extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		
+		out.print("<h1 style='color:red;'>CREATING GUI IS COMPLEX USING SERVLET</h1>");
+		
+	}
+
+}
+
+Q.23
+====================
+package ServletDemo;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/Q23_Servlet")
+public class Q23_Servlet extends HttpServlet {
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String un=request.getParameter("username");
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.print("<h1>WELCOME , "+un+"</h1>");
+		out.flush();
+		out.close();
+		
+	}
+
+}
+------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="Q23_Servlet" method="post">
+<input type="text" name="username" placeholder="Enter the Name"></input>
+<button>SUBMIT</button>
+</form>
+</body>
+</html>
+
+Q.24
+====================
+package Cal;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/Result")
+public class Result extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter pw=response.getWriter();
+		int num1=Integer.parseInt(request.getParameter("firstno"));
+		int num2=Integer.parseInt(request.getParameter("secondno"));
+		if(request.getParameter("add") != null){
+			pw.println("Addition= "+(num1+num2));
+		}
+		if(request.getParameter("sub") != null){
+			pw.println("Subtraction= "+(num1-num2));
+		}
+		if(request.getParameter("mul") != null){
+			pw.println("Multiplication= "+(num1*num2));
+		}
+		if(request.getParameter("div") != null){
+			pw.println("Division= "+(num1/num2));
+		}
+	}
+
+}
+-----------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Calculator</h1>
+<form action="Result" method="get">
+First Number :<input type="text" name="firstno"></input><br><br>
+Second Number :<input type="text" name="secondno"></input><br><br>
+Operation:<input type="radio" name="add">Add</input>
+<input type="radio" name="sub">Subtract</input>
+<input type="radio" name="mul">Multiply</input>
+<input type="radio" name="div">Divide</input><br><br>
+<button>Result</button>
+</form>
+</body>
+</html>
+
+Q.25
+====================
+package ServletDemo;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/Q25_FirstServlet")
+public class Q25_FirstServlet extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd=request.getRequestDispatcher("Q25_SecondServlet");
+		rd.forward(request, response);
+	}
+
+}
+---------------------------------------
+package ServletDemo;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/Q25_SecondServlet")
+public class Q25_SecondServlet extends HttpServlet {
+	
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String un=request.getParameter("username");
+		response.setContentType("text/plain");
+		
+		PrintWriter out=response.getWriter();
+		out.print(un);
+	}
+
+}
+--------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="Q25_FirstServlet" method="get">
+<input type="text" name="username" placeholder="Enter the Name"></input>
+<button>SUBMIT</button>
+</form>
+</body>
+</html>
